@@ -1,4 +1,6 @@
 import MySQLdb
+import urllib.request, json
+import bittrex as bittrex
 
 def connect_crypto_db():
     db = MySQLdb.connect(host="localhost",
@@ -9,15 +11,36 @@ def connect_crypto_db():
     return db
 
 def create_all_tables(db):
-    create_currency_change_table(db)
+    create_currency_tables(db)
 
-def create_currency_change_table(db): 
+def remove_all_tables(db):
     cur = db.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS currency_change(\
-       name varchar(255),\
-       four_hour decimal(6,2),\
-       one_day decimal(6,2),\
-       seven_day decimal(6,2),\
-       two_weeks decimal(6,2),\
-       one_month decimal(6,2))")
+    markets = bittrex.get_all_market_summaries()
+    for market in markets:
+        cur.execute("DROP TABLE IF EXISTS {0}".format(market.replace('-', '_')))
 
+def create_currency_tables(db): 
+    cur = db.cursor()
+    markets = bittrex.get_all_market_summaries()
+    for market in markets:
+        cur.execute("CREATE TABLE IF NOT EXISTS {0}(\
+            bid decimal(20,8))".format(market.replace('-', '_')))
+
+def test(db):
+    cur = db.cursor()
+    cur.execute("INSERT INTO {0} VALUES ({1})".format(
+        "USDT-ZEC".replace('-', '_'),
+        str(4.7)))
+    db.commit() 
+
+def fill_all_tables(db):
+    cur = db.cursor()
+    markets = bittrex.get_all_market_summaries()
+    for market in markets:
+        prices = bittrex.get_market_history(market)
+        print("Updating table {0}".format(market))
+        for price in prices:
+            cur.execute("INSERT INTO {0} VALUES ({1})".format(
+                market.replace('-', '_'),
+                str(price))) 
+            db.commit()

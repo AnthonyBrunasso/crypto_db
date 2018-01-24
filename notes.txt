@@ -27,10 +27,24 @@ Instructions:
 
         mysql -u root -p < create_database.sql
 
-    create all tables
+    create/fill all tables
 
-        python create_tables.py
+        python update_tables.py
 
+Modules
+
+    db.py - Abstraction for database operations
+    bittrex.py - Functions that use and parse bittrex api
+
+Random
+
+    requests library urllib.request
+
+    with urllib.request.urlopen("https://bittrex.com/api/v1.1/public/getcurrencies") as url:
+        data = json.loads(url.read().decode())
+        print(data)
+
+    Python 3 not Python 2
 Development user
     User:     root
     Password: root
