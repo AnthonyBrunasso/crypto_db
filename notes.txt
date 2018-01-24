@@ -1,0 +1,36 @@
+Install MySQL Server
+    ubuntu:
+     https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-16-04
+
+    windows:
+
+Opening up mysql at command line:
+
+    ubuntu:
+        mysql -u root -p 
+
+    windows:
+
+Scripts are done in python so download python and mysql communication mysqlclient
+
+    ubuntu:
+        sudo apt-get install python-pip python-dev libmysqlclient-dev
+        pip install mysqlclient
+
+    windows:
+
+Instructions:
+
+    Should be platform independent but assumes you have all the necessary software installed.
+
+    create the database:
+
+        mysql -u root -p < create_database.sql
+
+    create all tables
+
+        python create_tables.py
+
+Development user
+    User:     root
+    Password: root
