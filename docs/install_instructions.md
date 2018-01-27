@@ -9,7 +9,8 @@ Download python (3.6.x):
 
 Install MySQL Community Server and MySQL Workbench when installing MySQL make sure the password is set as 'root'.
 
-    https://dev.mysql.com/downloads/
+    https://dev.mysql.com/downloads/mysql/
+    https://dev.mysql.com/downloads/workbench/
 
 Download the source code from https://github.com/AnthonyBrunasso/crypto_db you can clone it with git or download the zipped file from the link.
 
