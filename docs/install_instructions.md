@@ -29,7 +29,7 @@ Now run the following commands from your command line:
     mysql -u root -p < create_database.sql
     python update_tables.py
 
-The result of this should the database created with all the tables and some inital data from the api. You should be able to connect to this using MySQL Workbench or you can run the following commands from command line:
+The result of this should the database is created with all the tables and some inital data from the api. You should be able to connect to this using MySQL Workbench or you can run the following commands from command line:
 
     mysql -u root -p
     <type your password>
