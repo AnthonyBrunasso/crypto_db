@@ -28,17 +28,36 @@ def create_currency_tables(db):
         market = market.replace('-', '_')
         print('Creating table {0}'.format(market))
         cur.execute("CREATE TABLE IF NOT EXISTS {0}(\
-            bid decimal(20,8))".format(market))
+            open decimal(22,10),\
+            high decimal(22,10),\
+            low decimal(22,10),\
+            close decimal(22,10),\
+            volume decimal(22,10),\
+            time varchar(120),\
+            base_value decimal(22,10))".format(market))
 
 def fill_all_tables(db):
     cur = db.cursor()
     markets = bittrex.get_all_market_summaries()
     for market in markets:
-        prices = bittrex.get_market_history(market)
+        ticks = bittrex.get_ticks(market)
         market = market.replace('-', '_')
         print("Updating table {0}".format(market))
-        for price in prices:
-            cur.execute("INSERT INTO {0} VALUES ({1})".format(
+        for t in ticks:
+            qry = "INSERT INTO {0} VALUES ({1},\
+                {2},\
+                {3},\
+                {4},\
+                {5},\
+                '{6}',\
+                {7})".format(
                 market,
-                str(price))) 
+                str(t.base_volume),
+                str(t.close_value),
+                str(t.high_value),
+                str(t.low_value),
+                str(t.open_value),
+                str(t.timestamp),
+                str(t.volume))
+            cur.execute(qry)
             db.commit()
