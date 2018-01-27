@@ -19,10 +19,22 @@ Download the source code from https://github.com/AnthonyBrunasso/crypto_db you c
         1. Click 'Clone or download' 
         2. Click 'Download ZIP'
 
-Extract the zipped file somewhere on your machine and open it up that directory in your command line console. Run the following commands:
+Extract the zipped file somewhere on your machine and open up that directory in your command line console. If you've never done that before search for the program 'cmd' my pressing the windows key and typing cmd. Assuming you extracted the zipped file from above to C:\Users\You\crytpo_db type:
+
+    cd C:\Users\You\crypto_db
+
+Now run the following commands from your command line:
 
     pip install mysqlclient
     mysql -u root -p < create_database.sql
     python update_tables.py
 
-The result of this should the database created with all the tables and some inital data from the api.
+The result of this should the database created with all the tables and some inital data from the api. You should be able to connect to this using MySQL Workbench or you can run the following commands from command line:
+
+    mysql -u root -p
+    <type your password>
+    use cryptics;
+    show tables;
+    SELECT * FROM USDT_BTC;
+
+You can view data using SQL from any of the tables show from the show tables query.
