@@ -39,10 +39,12 @@ def create_currency_tables(db):
 def fill_all_tables(db):
     cur = db.cursor()
     markets = bittrex.get_all_market_summaries()
+    num = 0
     for market in markets:
         ticks = bittrex.get_ticks(market)
         market = market.replace('-', '_')
-        print("Updating table {0}".format(market))
+        num += 1
+        print("Updating table {0} {1}/{2}".format(market, num, len(markets)))
         for t in ticks:
             qry = "INSERT INTO {0} VALUES ({1},\
                 {2},\
